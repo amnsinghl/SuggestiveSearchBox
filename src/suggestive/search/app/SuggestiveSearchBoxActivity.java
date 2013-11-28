@@ -36,7 +36,7 @@ public class SuggestiveSearchBoxActivity extends Activity {
     }
     
     public void doMySearch (String query) {
-    	Log.d("Hey yo", query);
+    	
     }
     
     public void showResult(Uri data) {

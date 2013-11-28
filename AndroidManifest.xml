@@ -32,5 +32,6 @@
           android:authorities="suggestive.search.app.providers.SuggestionContentProvider" >
       </provider>
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
