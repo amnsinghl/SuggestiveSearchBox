@@ -23,7 +23,14 @@
         <meta-data android:name="android.app.searchable"
                    android:resource="@xml/searchable"/>
         </activity>
-      
+        
+        <activity android:name=".SearchResultActivity"
+            	android:label="SearchResult">
+        </activity>
+      <provider 
+          android:name="suggestive.search.app.providers.SuggestionContentProvider"
+          android:authorities="suggestive.search.app.providers.SuggestionContentProvider" >
+      </provider>
     </application>
 
 </manifest>
