@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, SuggestiveSearchBoxActivity!</string>
+    <string name="app_name">SuggestiveSearchBox</string>
+    <string name="app_label">Suggestive Search</string>
+    <string name="search_hint">type your query</string>
+
+</resources>
