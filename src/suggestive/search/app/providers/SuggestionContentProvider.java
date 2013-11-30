@@ -25,9 +25,8 @@ import android.util.Log;
 
 public class SuggestionContentProvider extends ContentProvider {
 
-	 public static final String AUTHORITY = "suggestive.search.app.providers.SuggestionContentProvider";
+	public static final String AUTHORITY = "suggestive.search.app.providers.SuggestionContentProvider";
 
-	
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
 		// TODO Auto-generated method stub
@@ -52,54 +51,64 @@ public class SuggestionContentProvider extends ContentProvider {
 		return false;
 	}
 
+	/**
+	 * This function puts the suggestion in a Cursor
+	 * 
+	 * @return Cursor
+	 */
 	@Override
 	public Cursor query(Uri arg0, String[] arg1, String arg2, String[] arg3,
 			String arg4) {
-		// TODO Auto-generated method stub
-		Log.d("hola",arg0.getLastPathSegment());
 		String suggestions = getSuggestion(arg0.getLastPathSegment());
-		String[] columnNames = {"_id","suggest_text_1"};
+		String[] columnNames = { "_id", "suggest_text_1" };
 		MatrixCursor matrixCursor = new MatrixCursor(columnNames);
 		try {
 			JSONObject jsonObject = new JSONObject(suggestions);
 			JSONArray jsonArray = jsonObject.getJSONArray("tags");
 			Log.d("yeah", jsonArray.toString());
-			for(int i=0;i<jsonArray.length();i++) {
-				matrixCursor.addRow(new Object[] {i, jsonArray.getString(i)});
+			for (int i = 0; i < jsonArray.length(); i++) {
+				matrixCursor.addRow(new Object[] { i, jsonArray.getString(i) });
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		return matrixCursor;
 	}
-	
+
+	/**
+	 * This function fetches the suggestions from the server
+	 * 
+	 * @return String
+	 */
 	private String getSuggestion(String query) {
 		StringBuilder builder = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();
-	    HttpGet httpGet = new HttpGet("http://ec2-54-213-110-181.us-west-2.compute.amazonaws.com:8080/offers/tags/?q=" + query);
-	    try {
-	        HttpResponse response = client.execute(httpGet);
-	        StatusLine statusLine = response.getStatusLine();
-	        int statusCode = statusLine.getStatusCode();
-	        if (statusCode == 200) {
-	          HttpEntity entity = response.getEntity();
-	          InputStream content = entity.getContent();
-	          BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-	          String line;
-	          while ((line = reader.readLine()) != null) {
-	            builder.append(line);
-	          }
-	        } else {
-	          Log.e("Error", "Failed to download file");
-	        }
-	      } catch (ClientProtocolException e) {
-	        e.printStackTrace();
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }
-	   Log.d("Yo bitch",builder.toString());
-	   return builder.toString();
+		HttpGet httpGet = new HttpGet(
+				"http://ec2-54-213-110-181.us-west-2.compute.amazonaws.com:8080/offers/tags/?q="
+						+ query);
+		try {
+			HttpResponse response = client.execute(httpGet);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append(line);
+				}
+			} else {
+				Log.e("Error", "Failed to download file");
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return builder.toString();
 	}
 
 	@Override
@@ -107,6 +116,5 @@ public class SuggestionContentProvider extends ContentProvider {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
 
 }

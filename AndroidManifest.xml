@@ -17,21 +17,21 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-            <action android:name="android.intent.action.SEARCH" />
-        </intent-filter>
-        <meta-data android:name="android.app.searchable"
-                   android:resource="@xml/searchable"/>
+            <intent-filter >
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
-        
-        <activity android:name=".SearchResultActivity"
-            	android:label="SearchResult">
-        </activity>
-      <provider 
-          android:name="suggestive.search.app.providers.SuggestionContentProvider"
-          android:authorities="suggestive.search.app.providers.SuggestionContentProvider" >
-      </provider>
+
+        <provider
+            android:authorities="suggestive.search.app.providers.SuggestionContentProvider"
+            android:name="suggestive.search.app.providers.SuggestionContentProvider" >
+        </provider>
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
